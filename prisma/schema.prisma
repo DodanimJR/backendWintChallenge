@@ -21,9 +21,6 @@ model User {
   password  String
   membership Membership @default(FREE)
   projects  Project[]
-  budgets   Budget[]
-
-
 }
 
 model Project {
@@ -43,8 +40,6 @@ model Budget {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int
   project   Project  @relation(fields: [projectId], references: [id])
   projectId Int       @unique
   categories Category[]
