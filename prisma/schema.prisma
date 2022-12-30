@@ -12,10 +12,79 @@ datasource db {
 
 model User {
   id        Int      @id @default(autoincrement())
+  role      Role    @default(CLIENT)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   email     String   @unique
-  name      String?
+  name      String
+  lastname  String
+  password  String
+  membership Membership @default(FREE)
+  projects  Project[]
+  budgets   Budget[]
+
 
 }
 
+model Project {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  description String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  budget    Budget?
+
+}
+
+model Budget {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  project   Project  @relation(fields: [projectId], references: [id])
+  projectId Int       @unique
+  categories Category[]
+
+}
+
+model Category{
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  type      Type
+  budget    Budget   @relation(fields: [budgetId], references: [id])
+  budgetId  Int
+  transactions Transaction[]
+
+}
+
+model Transaction{
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  amount    Float
+  category  Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+}
+
+
+enum Role {
+  CLIENT
+  ADMIN
+}
+
+enum Membership {
+  FREE
+  PREMIUM
+}
+
+enum Type {
+  INCOME
+  EXPENSE
+}
