@@ -1,5 +1,5 @@
 const PORT = 8000;
-const HOST = '0.0.0.0';
+const HOST = 'localhost';
 const router= require('./routes/router')
 const express = require('express');
 const server = express();
