@@ -8,7 +8,7 @@ class UserController {
         console.log(req.headers);
         res.json({message: 'Hello World'});
     };
-
+    //Validate role from token, to make sure only admin can access this route
 
 }
 
