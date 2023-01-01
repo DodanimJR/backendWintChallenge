@@ -24,6 +24,9 @@ class userService {
         }
         return client.user.update({where: {id: id}, data: User});
     }
+    removeUser(id){
+        return client.user.delete({where: {id: id}});
+    }
 
 
 }

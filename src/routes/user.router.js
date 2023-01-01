@@ -2,7 +2,6 @@ const express = require('express')
 const userRouter = express.Router()
 const userController = require('../controllers/user.controller');
 
-userRouter.put('/a/edit/:id', userController.adminUserEdit);
-userRouter.put("/:id", userController.selfUserEdit);
+userRouter.put("/update/:id", userController.selfUserUpdate);
 
 module.exports = userRouter;
