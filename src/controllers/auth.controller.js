@@ -1,6 +1,7 @@
 const {request, response} = require('express');
 const authService = require('../services/auth.service');
-const authModels = require('../models/authModels.model');
+const authModels = require('../models/auth.model');
+const { rest } = require('lodash');
 
 class AuthController {
     async register(req, res) {
@@ -22,11 +23,16 @@ class AuthController {
             const data = req.body;
             const validate = authModels.loginUserModel.validate(data);
             const user = await authService.login(validate.value);
-            res.json(`Logged in User ${user.name}`);
+            //console.log(user);
+            if(user.type == 'error'){
+                throw new Error(user.message);
+            }else{
+                res.json({accessToken: user});
+            }
             
         } catch (error) {
             console.log(error);
-            res.status(500).json({message: 'Something went wrong'});
+            res.json({message: error.message});
             
         }
     }
