@@ -2,6 +2,7 @@ const {request, response} = require('express');
 const authService = require('../services/auth.service');
 const authModels = require('../models/auth.model');
 const { rest } = require('lodash');
+const { object } = require('joi');
 
 class AuthController {
     async register(req, res) {
@@ -23,15 +24,17 @@ class AuthController {
             const data = req.body;
             const validate = authModels.loginUserModel.validate(data);
             const user = await authService.login(validate.value);
-            //console.log(user);
-            if(user.type == 'error'){
-                throw new Error(user.message);
+            console.log(user.json);
+        
+            if(user.message=="Invalid password"){
+                throw new Error("Invalid password");
+                
+
             }else{
                 res.json({accessToken: user});
             }
             
         } catch (error) {
-            console.log(error);
             res.json({message: error.message});
             
         }

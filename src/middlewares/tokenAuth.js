@@ -21,7 +21,9 @@ const {promisify} = require('util');
                 if(!user){
                     throw new createError(404, 'User not found');
                 }
+                delete user.password;
                 req.user = user;
+            
             }
             next();
         } catch (error) {
