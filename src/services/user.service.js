@@ -2,6 +2,7 @@ const client = require('../database/client');
 const {hashSync, genSaltSync} = require('bcrypt');
 
 
+
 class userService {
     #hashPassword(password) {
         const salt = genSaltSync(10);
@@ -23,6 +24,7 @@ class userService {
         }
         return client.user.update({where: {id: id}, data: User});
     }
+
 
 }
 
