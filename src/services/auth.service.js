@@ -52,7 +52,6 @@ class authService {
                 throw new createError(401, 'Invalid password')
             }
             const accessToken = this.#generateToken(user);
-            console.log("access token",accessToken);
             return accessToken;
 
             
