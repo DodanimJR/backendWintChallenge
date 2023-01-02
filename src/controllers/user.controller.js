@@ -73,8 +73,7 @@ class UserController {
                         const user = await authService.register(validate.value);
                         res.json({message: `Created user ${user.name}`});
                     }else{
-                        let message = validate.error.details[0].message
-                        throw new Error(message);
+                        throw new Error(validate.error.details[0].message);
                     }
                 }else{
                     throw new Error("Invalid data");
