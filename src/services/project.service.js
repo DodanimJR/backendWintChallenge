@@ -28,6 +28,24 @@ class projectService{
             return error;
         }
     }
+    async getProjectsByPage(userId,type,page){
+        try {
+            const projects = await client.project.findMany({
+                where: {
+                    userId: userId
+                },
+                take: 10,
+                skip: (page - 1) * 10,
+                orderBy: {
+                    createdAt: type
+                }
+            });
+            return projects;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
+    }
     async getProject(id){
         try {
             const project = await client.project.findUnique({

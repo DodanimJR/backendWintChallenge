@@ -3,8 +3,9 @@ const projectController = require('../controllers/project.controller')
 const projectRouter = express.Router()
 
 projectRouter.post('/',projectController.createProject);
-projectRouter.get('/:userId/asc',projectController.getProjectsAsc);
-projectRouter.get('/:userId/desc',projectController.getProjectsDesc);
+projectRouter.get('/:id',projectController.getProject);
+projectRouter.get('/:userId/asc/:page',projectController.getProjectsByPageAsc);
+projectRouter.get('/:userId/desc/:page',projectController.getProjectsByPageDesc);
 
 
 module.exports = projectRouter;

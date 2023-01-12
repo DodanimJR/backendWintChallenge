@@ -20,11 +20,10 @@ class projectController{
             res.status(500).json({message: error.message});
         }
     }
-    getProjectsAsc = async (req, res) => {
+    getProjectsByPageAsc = async (req, res) => {
         try {
-            const {userId} = req.params;
-            console.log(userId);
-            const projects = await projectService.getProjects(parseInt(userId),'asc');
+            const {userId, page} = req.params;
+            const projects = await projectService.getProjectsByPage(parseInt(userId),'asc',parseInt(page));
             if(projects.length > 0){
                 res.json(projects);
             }else{
@@ -34,10 +33,10 @@ class projectController{
             res.json({message: error.message});
         }
     }
-    getProjectsDesc = async (req, res) => {
+    getProjectsByPageDesc = async (req, res) => {
         try {
-            const {userId} = req.params;
-            const projects = await projectService.getProjects(parseInt(userId),'desc');
+            const {userId, page} = req.params;
+            const projects = await projectService.getProjectsByPage(parseInt(userId),'desc',parseInt(page));
             if(projects.length > 0){
                 res.json(projects);
             }else{
@@ -47,9 +46,11 @@ class projectController{
             res.json({message: error.message});
         }
     }
+
+
     getProject = async (req, res) => {
         const {id} = req.params;
-        const project = await Project.findById(id);
+        const project = await projectService.getProject(parseInt(id));
         res.json(project);
     }
     deleteProject = async (req, res) => {
