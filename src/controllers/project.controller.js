@@ -30,7 +30,7 @@ class projectController{
                 throw new Error('No projects found');
             }
         } catch (error) {
-            res.json({message: error.message});
+            res.status(500).json({message: error.message});
         }
     }
     getProjectsByPageDesc = async (req, res) => {
@@ -43,24 +43,57 @@ class projectController{
                 throw new Error('No projects found');
             }
         } catch (error) {
-            res.json({message: error.message});
+            res.status(500).json({message: error.message});
         }
     }
 
 
     getProject = async (req, res) => {
-        const {id} = req.params;
-        const project = await projectService.getProject(parseInt(id));
-        res.json(project);
+        try {
+            const {id} = req.params;
+            const project = await projectService.getProject(parseInt(id));
+            if(project){
+                res.json(project);
+            }else{
+                throw new Error('Project not found');
+            }
+        } catch (error) {
+            res.status(500).json({message: error.message});
+        }
+    }
+    updateProject = async (req, res) => {
+        try {
+            const {id} = req.params;
+            const data = req.body;
+            const validate = await ProjectModel.projectUpdateModel.validate(data);
+            if(validate.error){
+                throw new Error(validate.error.details[0].message);
+            }else{
+                const project = await projectService.updateProject(parseInt(id),validate.value);
+                if(project){
+                    res.json({message: 'Project updated'});
+                }else{
+                    throw new Error('Project not found');
+                }
+
+            }
+        } catch (error) {
+            res.status(500).json({message: error.message});
+        }
     }
     deleteProject = async (req, res) => {
         const {id} = req.params;
-        await Project.findByIdAndDelete(id);
-        res.json({message: 'Project deleted'});
-    }
-    updateProject = async (req, res) => {
-        const {id} = req.params;
-        const data = req.body;
+        try {
+            const project = await projectService.deleteProject(parseInt(id));
+            if(project){
+                //console.log(project);
+                res.json({message: 'Project deleted'});
+            }else{
+                throw new Error('Project not found');
+            }
+        } catch (error) {
+            res.status(500).json({message: error.message});
+        }
     }
         
 }

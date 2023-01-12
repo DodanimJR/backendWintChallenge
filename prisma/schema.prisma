@@ -29,7 +29,7 @@ model Project {
   updatedAt DateTime @updatedAt
   name      String
   description String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId    Int
   budget    Budget?
 
@@ -40,7 +40,7 @@ model Budget {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String
-  project   Project  @relation(fields: [projectId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   projectId Int       @unique
   categories Category[]
 
@@ -52,7 +52,7 @@ model Category{
   updatedAt DateTime @updatedAt
   name      String
   type      Type
-  budget    Budget   @relation(fields: [budgetId], references: [id])
+  budget    Budget   @relation(fields: [budgetId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   budgetId  Int
   transactions Transaction[]
 

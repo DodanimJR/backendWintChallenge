@@ -6,6 +6,11 @@ const projectModel = joi.object({
     userId: joi.number().required(),
 });
 
+const projectUpdateModel = joi.object({
+    name: joi.string(),
+    description: joi.string(),
+});
 module.exports = {
-    projectModel
+    projectModel,
+    projectUpdateModel
 }

@@ -58,12 +58,11 @@ class projectService{
             return error;
         }
     }
-    async deleteProject(id,userdId){
+    async deleteProject(id){
         try {
             const project = await client.project.delete({
                 where: {
                     id: id,
-                    UserId: userdId
                 }
             });
             return project;
